@@ -1,0 +1,17 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+env/
+venv/
+
+# Flask
+instance/
+.webassets-cache/
+
+# IDE/Editor
+.idea/
+.vscode/
+
+# Node_modules (if you use any Node.js dependencies)
+node_modules/

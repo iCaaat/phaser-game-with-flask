@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>游戏页面</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}">
+  <script src="{{ url_for('static', filename='js/phaser.min.js') }}"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>欢迎, {{ player.username }}</h1>
+
+    <div class="history-scores">
+      <h2>您的历史得分:</h2>
+      <ul>
+        {% for score in scores %}
+        <li>{{ score.score }} 分 ({{ score.timestamp }})</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="game-container"></div>
+
+    <div class="submit-score">
+      <h2>提交新分数:</h2>
+      <input type="number" id="score" placeholder="输入分数">
+      <button onclick="submitScore()">提交</button>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  <script>
+    function submitScore() {
+      const score = document.getElementById('score').value;
+      fetch('/submit_score', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          username: "{{ player.username }}",
+          score: score
+        })
+      })
+        .then(response => {
+          if (!response.ok) {
+            // 处理错误响应
+            return response.json().then(errorData => {
+              throw new Error(errorData.error || 'Unknown error');
+            });
+          }
+          return response.json();
+        })
+        .then(data => {
+          if (data.message) {
+            alert('分数提交成功!');
+            window.location.reload();
+          }
+        })
+        .catch(error => {
+          alert('发生错误: ' + error.message);
+        });
+    }
+
+  </script>
+</body>
+
+</html>

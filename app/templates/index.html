@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <title>Game login</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>欢迎来到游戏!</h1>
+    <form action="/" method="POST">
+      <label for="username">输入您的昵称:</label>
+      <input type="text" id="username" name="username" required>
+      <label for="email">输入您的邮件（可留空）:</label>
+      <input type="text" id="email" name="email">
+      <button type="submit">开始游戏</button>
+    </form>
+  </div>
+
+</body>
+
+</html>
